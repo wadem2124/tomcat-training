@@ -1,0 +1,183 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Tomcat for Administrators</title>
+
+    <link rel="stylesheet" href="../dist/reset.css">
+    <link rel="stylesheet" href="../dist/reveal.css">
+    <link rel="stylesheet" href="../dist/theme/white.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../plugin/highlight/monokai.css">
+
+    <!-- Override default styles -->
+    <style>
+      <!-- Transparent background image on all slides -->
+      body {
+        position: relative;
+        z-index: 1;
+      }
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0; 
+        left: 0;
+        width: 100%; 
+        height: 100%;  
+        opacity: .15; 
+        z-index: -1;
+        background: url( '../images/tomcat.svg' );
+        background-position: center;
+        background-size: 100%;
+        background-repeat: no-repeat;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>Tomcat for Administrators</h1>
+        </section>
+        <section>
+          <h2>Introduction</h2>
+          <aside class="notes">
+            Welcome everyone.
+            <br>
+            If there are any venue announcements (WiFi access, fire exits etc.) do those now.
+            <br>
+            Introduce yourself here. Get the class to do short introductions as well. Find out any
+            particular topics of interest.
+            <br>
+          </aside>
+        </section>
+        <section>
+          <h3>Agenda - Morning</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Topic</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>09.00</td>
+                <td>Introduction</td>
+              </tr>
+              <tr>
+                <td>09.30</td>
+                <td>Background</td>
+              </tr>
+              <tr>
+                <td>10.30</td>
+                <td>Deployment</td>
+              </tr>
+              <tr>
+                <td>11.30</td>
+                <td>Logging</td>
+              </tr>
+              <tr>
+                <td>12.30</td>
+                <td>Lunch</td>
+              </tr>
+            </tbody>
+          </table>
+          <aside class="notes">
+            Explain modules are not exactly 60 minutes. Breaks will be slotted in as required. At
+            least one AM and one PM.
+          </aside>
+        </section>
+        <section>
+          <h3>Agenda - Afternoon</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Topic</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>12.30</td>
+                <td>Lunch</td>
+              </tr>
+              <tr>
+                <td>13.30</td>
+                <td>TLS - Background</td>
+              </tr>
+              <tr>
+                <td>14.30</td>
+                <td>TLS - OpenSSL</td>
+              </tr>
+              <tr>
+                <td>15.30</td>
+                <td>Performance</td>
+              </tr>
+              <tr>
+                <td>16.30</td>
+                <td>Wrap up</td>
+              </tr>
+            </tbody>
+          </table>
+          <aside class="notes">
+            Wrap up session is an opportunity to ask general Tomcat questions, dig a little deeper
+            into an earlier topic etc.
+            <br>
+            Questions are welcome at any time. Just get my attention.
+          </aside>
+        </section>
+        <section data-external-replace="../modules/intro.html"> </section>
+        <section data-external-replace="../modules/background-01.html"> </section>
+        <section data-external-replace="../modules/deployment-01.html"> </section>
+        <section data-external-replace="../modules/logging-01.html"> </section>
+        <section>
+          <h1>Lunch</h1>
+        </section>
+        <section data-external-replace="../modules/tls-01.html"> </section>
+        <section data-external-replace="../modules/tls-03.html"> </section>
+        <section data-external-replace="../modules/performance-01.html"> </section>
+        <section data-external-replace="../modules/wrap-up.html"> </section>
+      </div>
+    </div>
+
+    <script src="../dist/reveal.js"></script>
+    <script src="../plugin/notes/notes.js"></script>
+    <script src="../plugin/markdown/markdown.js"></script>
+    <script src="../plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+        
+        dependencies: [
+          // reveal_external to allow composition from multiple files
+          { src: '../plugin/external/external.js', condition: function() { return !!document.querySelector( '[data-external],[data-external-replace]' ); } }
+        ]      });
+    </script>
+  </body>
+</html>
