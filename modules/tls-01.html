@@ -1,0 +1,234 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<section>
+  <h2>Introduction to TLS</h2>
+</section>
+<section>
+  <h3>Why?</h3>
+  <p>Lots of questions about TLS on the mailing lists</p>
+  <p>It is clear many folks don’t understand how TLS works</p>
+  <p>Debugging something you don’t understand is hard</p>
+  <p>Should use TLS not SSL</p>
+  <p>I’ll probably use them interchangeably<br/>(as do the Tomcat docs)</p>
+</section>
+<section>
+  <h3>Cryptography Basics</h3>
+</section>
+<section>
+  <h3>Symmetric Encryption</h3>
+  <p>Use the same secret key to encrypt and decrypt</p>
+  <img src="../images/tls-01/diagram-01.svg" style="border: none; box-shadow:none;"/>
+</section>
+<section>
+  <h3>Asymmetric Encryption</h3>
+  <p>Pair of keys, A and B</p>
+  <p>A and B are mathematically related</p>
+  <p>Very hard to derive one from the other</p> 
+  <p>Encrypt with A, decrypt with B</p>
+  <p>Encrypt with B, decrypt with A</p>
+  <p>Make one key public</p>
+  <p>Keep one key private</p>
+</section>
+<section>
+  <h3>Asymmetric Encryption</h3>
+  <p>Encrypt with public key, decrypt with private key</p>
+  <img src="../images/tls-01/diagram-02.svg" style="border: none; box-shadow:none;"/>
+</section>
+<section>
+  <h3>Asymmetric Encryption</h3>
+  <p>Encrypt with private key, decrypt with public key</p>
+  <img src="../images/tls-01/diagram-03.svg" style="border: none; box-shadow:none;"/>
+</section>
+<section>
+  <h3>Hash Functions</h3>
+  <p>Generate a fingerprint (hash) for a given input</p>
+  <p>Small change in input gives a large change in the hash</p>
+  <p>Very difficult to generate an input for a given hash</p>
+  <img src="../images/tls-01/diagram-04.svg" style="border: none; box-shadow:none;"/>
+</section>
+<section>
+  <h3>Digital Signatures</h3>
+  <p>Proves a document was sent by a given entity</p>
+  <img src="../images/tls-01/diagram-05.svg" style="border: none; box-shadow:none;"/>
+</section>
+<section>
+  <h3>Digital Signatures</h3>
+  <p>Validation</p>
+  <img src="../images/tls-01/diagram-06.svg" style="border: none; box-shadow:none;"/>
+</section>
+<section>
+  <h3>Digital Signatures</h3>
+  <p>If the hashes match...</p>
+  <p>...then the public key decrypted the digital signature...</p>
+  <p>...so the private key created the digital signature...</p>
+  <p>...so the owner of the private key signed the document</p>
+  <p/>
+  <p>Who owns the private key?</p>
+</section>
+<section>
+  <h3>Certificates</h3>
+  <p>Associates a public key with an identity</p>
+  <img src="../images/tls-01/diagram-07.svg" style="border: none; box-shadow:none;"/>
+</section>
+<section>
+  <h3>Certificates</h3>
+  <p>CA is Certificate Authority</p>
+  <p>Need to link CA's public key to CA's identity</p>
+  <p>Use another certificate</p>
+  <p>Result is a chain of certificates</p>
+  <p>Chain ends with a root certificate authority</p>
+  <p>There are multiple root CAs</p>
+</section>
+<section>
+  <h3>Root Certificates</h3>
+  <p>Self-signed</p>
+  <p>Alternative trust path required</p>
+  <p>Often installed by OS</p>
+  <p>Manual validation against root CA's web site</p>
+  <img src="../images/tls-01/diagram-08.svg" style="border: none; box-shadow:none;"/>
+</section>
+<section>
+  <h3>TLS Handshake: Starting point</h3>
+  <img src="../images/tls-01/diagram-09.svg" style="border: none; box-shadow:none; float: right"/>
+  <p style="text-align: left">Client:</p>
+  <ul style="display: block">
+    <li>CA certificates</li>
+    <li>supported algorithms</li>
+  </ul>
+  <p style="text-align: left">Server:</p>
+  <ul style="display: block">
+    <li>Certificate</li>
+    <li>Private key</li>
+    <li>supported algorithms</li>
+  </ul> 
+</section>
+<section>
+  <h3 style="text-transform: none">Step 1: ClientHello</h3>
+  <img src="../images/tls-01/diagram-10.svg" style="border: none; box-shadow:none; float: right"/>
+  <p style="text-align: left">Client generates random number</p>
+  <p style="text-align: left">Client sends message to server</p>
+  <ul style="display: block">
+    <li>supported algorithms</li>
+    <li>random number</li>
+  </ul> 
+</section>
+<section>
+  <h3 style="text-transform: none">Step 2: ServerHello</h3>
+  <img src="../images/tls-01/diagram-11.svg" style="border: none; box-shadow:none; float: right"/>
+  <p style="text-align: left">Server generates random number</p>
+  <p style="text-align: left">Server compares algorithms</p>
+  <ul style="display: block">
+    <li>selects algorithms</li>
+  </ul> 
+  <p style="text-align: left">Server sends message to client</p>
+  <ul style="display: block">
+    <li>selected algorithms</li>
+    <li>random number</li>
+  </ul> 
+</section>
+<section>
+  <h3 style="text-transform: none">Step 3: Certificate</h3>
+  <img src="../images/tls-01/diagram-12.svg" style="border: none; box-shadow:none; float: right"/>
+  <p style="text-align: left">Server sends message to client</p>
+  <ul style="display: block">
+    <li>Server certificate</li>
+  </ul> 
+  <p style="text-align: left">Client validates certificate</p>
+</section>
+<section>
+  <h3 style="text-transform: none">Step 6: ServerHelloDone</h3>
+  <img src="../images/tls-01/diagram-13.svg" style="border: none; box-shadow:none; float: right"/>
+  <p style="text-align: left">Server sends message to client</p>
+  <ul style="display: block">
+    <li>No content</li>
+  </ul> 
+</section>
+<section>
+  <h3 style="text-transform: none">Step 8: ClientKeyExchange</h3>
+  <img src="../images/tls-01/diagram-14.svg" style="border: none; box-shadow:none; float: right"/>
+  <p style="text-align: left">Client generates pre-master-secret</p>
+  <p style="text-align: left">Client encrypts PMS with Server's public key</p>
+  <p style="text-align: left">Client sends message to server</p>
+  <ul style="display: block">
+    <li>Encrypted PMS</li>
+  </ul> 
+</section>
+<section>
+  <h4 style="text-transform: none">Step 10: ChangeCipherSpec</h4>
+  <img src="../images/tls-01/diagram-15.svg" style="border: none; box-shadow:none; float: right"/>
+  <p style="text-align: left">Client generates master-secret</p>
+  <ul style="display: block">
+    <li>R<sub>C</sub> + R<sub>S</sub> + PMS</li>
+  </ul> 
+  <p style="text-align: left">Client switches to encrypted mode</p>
+  <ul style="display: block">
+    <li>Algorithms agreed in step 2</li>
+    <li>Symmetric encryption with MS</li>
+  </ul> 
+  <p style="text-align: left">Client sends message to server</p>
+  <ul style="display: block">
+    <li>No content</li>
+  </ul> 
+</section>
+<section>
+  <h4 style="text-transform: none">Step 11: Finished</h4>
+  <img src="../images/tls-01/diagram-15.svg" style="border: none; box-shadow:none; float: right"/>
+  <p style="text-align: left">Client has completed handshake</p>
+  <p style="text-align: left">Client sends message to server</p>
+  <ul style="display: block">
+    <li>No content</li>
+  </ul> 
+</section>
+<section>
+  <h4 style="text-transform: none">Step 12: ChangeCipherSpec</h4>
+  <img src="../images/tls-01/diagram-16.svg" style="border: none; box-shadow:none; float: right"/>
+  <p style="text-align: left">Server decrypts PMS</p>
+  <p style="text-align: left">Server creates MS</p>
+  <ul style="display: block">
+    <li>R<sub>C</sub> + R<sub>S</sub> + PMS</li>
+  </ul> 
+  <p style="text-align: left">Server switches to encrypted mode</p>
+  <ul style="display: block">
+    <li>Algorithms agreed in step 2</li>
+    <li>Symmetric encryption with MS</li>
+  </ul> 
+  <p style="text-align: left">Server sends message to client</p>
+  <ul style="display: block">
+    <li>No content</li>
+  </ul> 
+</section>
+<section>
+  <h4 style="text-transform: none">Step 13: Finished</h4>
+  <img src="../images/tls-01/diagram-16.svg" style="border: none; box-shadow:none; float: right"/>
+  <p style="text-align: left">Server has completed handshake</p>
+  <p style="text-align: left">Server sends message to client</p>
+  <ul style="display: block">
+    <li>No content</li>
+  </ul> 
+</section>
+<section>
+  <h4>Encryption</h4>
+  <p>Algorithms agreed in step 2</p>
+  <p>Symmetric</p>
+  <p>Master secret is shared secret key</p> 
+</section>
+<section>
+  <h4>TLS Extensions</h4>
+  <p>Client certificate authentication</p>
+  <p>Server Name Indication</p>
+  <p>Application Layer Protocol Negotiation</p> 
+</section>

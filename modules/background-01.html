@@ -1,0 +1,259 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<section>
+  <h2>Installation</h2>
+</section>
+<section>
+  <h3>Dependencies</h3>
+  <p>Java Runtime</p>
+  <p>Full JDK not required</p>
+  <p>Tomcat 9 requires Java 8 or later</p>
+  <p>Tomcat 8 requires Java 7 or later</p>
+  <p>Tomcat 7 requires Java 6 or later</p>
+  <p>Tomcat Native for OpenSSL support</p>
+  <aside class="notes">
+    Very old versions of Tomcat (10+ years ago) required the JDK for JSPs. All current versions of
+    Tomcat include the Eclipse compilers.
+    <br>
+    off-by-one pattern broken by Java's switch to a 6-monthly release cycle.
+    <br>
+    Tomcat 9 and 8.5 require Java 9 for pure Java HTTP/2 support
+    <br>
+    Tomcat 7 requires Java 7 for Java WebSocket support
+  </aside>
+</section>
+<section>
+  <h3>Installation options</h3>
+  <p>Unpack an archive</p>
+  <p>Tomcat Installer for Windows</p>
+  <p>Package from Linux distribution</p>
+  <p>Build from source</p>
+  <aside class="notes">
+    Various services provide packaged Tomcat instances. Not going to cover those.
+  </aside>
+</section>
+<section>
+  <h3>Installing from an archive</h3>
+  <p>.zip for Windows</p>
+  <p>.tar.gz for Linux, OSX etc</p>
+  <p>Contents is largely the same</p>
+  <p>Line endings vary</p>
+  <p>Tomcat Native binary for Windows is included in .zip</p>
+</section>
+<section>
+  <h3>Demonstration</h3>
+  <p>Installing from an archive</p>
+  <p>Windows</p>
+  <p>Linux</p>
+</section>
+<section>
+  <h3>Exercise</h3>
+  <p>Install from an archive</p>
+  <p>Display Tomcat home page in browser</p>
+</section>
+<section>
+  <h3>File structure</h3>
+  <p>bin/</p>
+  <ul>
+    <li>Start-up scripts</li>
+    <li>Utility scripts</li>
+    <li>Bootstrap classes</li>
+    <li>setenv.sh / setenv.bat</li>
+    <li>JAVA_OPTS vs CATALINA_OPTS</li>
+  </ul>
+  <aside class="notes">
+    Utility scripts include creating digests, install Windows service and a configuration check
+  </aside>
+</section>
+<section>
+  <h3>File structure</h3>
+  <p>conf/server.xml</p>
+  <p>Main configuration file</p>
+</section>
+<section>
+  <h3>File structure</h3>
+  <img src="../images/background-01/architecture.svg" />
+</section>
+<section>
+  <h3>File structure</h3>
+  <p>conf/web.xml</p>
+  <p>Global defaults for all web applications</p>
+  <p>Syntax defined by Servlet specification</p>
+  <p>Defines Default and JSP servlets</p>
+  <p>Can be over-ridden by web application</p> 
+</section>
+<section>
+  <h3>File structure</h3>
+  <p>conf/context.xml</p>
+  <p>Global defaults for all web applications</p>
+  <p>Tomcat specific</p>
+  <p>Can be over-ridden by web application</p> 
+</section>
+<section>
+  <h3>File structure</h3>
+  <p>conf/Catalina/localhost/*.xml</p>
+  <p>conf/&lt;engine-name&gt;/&lt;host-name&gt;/*.xml
+  <p>Web-application specific configuration</p>
+  <p>Always over-rides context.xml in the web application</p>
+  <p>Name sets context path</p> 
+</section>
+<section>
+  <h3>File structure</h3>
+  <p>conf/logging.properties</p>
+  <p>Logging configuration</p>
+  <p>Based on java.util.logging</p>
+  <p>Extended to be class loader aware</p>
+  <aside class="notes">
+    Explain issue of loggers with same name in different web applications
+  </aside>
+</section>
+<section>
+  <h3>File structure</h3>
+  <p>conf/tomcat-users.xml</p>
+  <p>Configures users for default Realm</p>
+  <p>Monitored for updates by default</p>
+  <p></p>
+  <p>XML schema file provided</p>
+  <aside class="notes">
+    Not ideal choice for production. Can use it with JMX.
+    <br/>
+    Used to be only read at Tomcat start
+  </aside>
+</section>
+<section>
+  <h3>File structure</h3>
+  <p>conf/jaspic-providers.xml</p>
+  <p>Java Authentication Service Provider Interface for Containers</p>
+  <p>Plug-in authentication modules</p>
+  <p>Google OAuth most likely use</p>
+</section>
+<section>
+  <h3>File structure</h3>
+  <p>conf/catalina.properties</p>
+  <p>Sets system properties</p>
+  <p>Various Tomcat configuration options set at JVM level</p>
+  <p>Often used to change default globally but value can still be changed per web application</p>
+  <aside class="notes">
+    Prefer not to configure at JVM level if at all possible. 
+  </aside>
+</section>
+<section>
+  <h3>File structure</h3>
+  <p>conf/catalina.policy</p>
+  <p>Used when running under a security manager</p>
+  <p>Only lightly tested</p>
+  <p>Few web applications work under a security manager out of the box</p>
+</section>
+<section>
+  <h3>File structure</h3>
+  <p>lib/</p>
+  <p>JAR files required by Tomcat</p>
+  <p>JARs added here will be visible to all web applications</p>
+</section>
+<section>
+  <h3>File structure</h3>
+  <p>logs/</p>
+  <p>Roll over daily except catalina.out</p>
+  <p>catalina.out - redirected console output</p>
+  <p>catalina.log - root logger (copied to console)</p>
+  <p>localhost_access_log - access log for default host</p>
+  <p>localhost.log - host log</p>
+  <p>manager.log, host-manager.log - web application log</p>
+</section>
+<section>
+  <h3>File structure</h3>
+  <p>temp/</p>
+  <p>Temporary file location used by the JVM</p>
+  <p>java.io.tmpdir</p>
+</section>
+<section>
+  <h3>File structure</h3>
+  <p>webapps/</p>
+  <p>Location of web applications</p>
+  <p>WARs or directories</p>
+  <p>Deployed automatically by default</p>
+</section>
+<section>
+  <h3>File structure</h3>
+  <p>work/</p>
+  <p>JSP compilation</p>
+  <p>Session serialization</p>
+</section>
+<section>
+  <h3>Running as a Service</h3>
+  <p>Windows</p>
+  <p>Runs as Local Service by default</p>
+  <p>(no password)</p>
+  <aside class="notes">
+    Patches welcome. Windows installer is easy to build.
+    Used to be Local System
+  </aside>
+</section>
+<section>
+  <h3>Running as a Daemon</h3>
+  <p>You'll need build-essential</p>
+  <p>Expand in place, build and copy jsvc to bin</p>
+  <p>Copy daemon.sh to /etc/init.d/tomcat</p>
+  <aside class="notes">
+    netstat -nap with ps
+    <br/>
+    Demonstrate starting on port 80
+  </aside>
+</section>
+<section>
+  <h3>Tomcat Installer for Windows</h3>
+  <p>Unpacks archive</p>
+  <p>Creates a service</p>
+  <p>Automates the manual steps</p>
+  <p>Provides a GUI to set some basic options</p>
+  <aside class="notes">
+    Original target was setting up developers, not production systems.
+  </aside>
+</section>
+<section>
+  <h3>Demonstration</h3>
+  <p>Installing with the Tomcat Installer for Windows</p>
+</section>
+<section>
+  <h3>Demonstration</h3>
+  <p>Installing JSVC, the Linux service wrapper</p>
+</section>
+<section>
+  <h3>Where did the files go?</h3>
+  <p>Linux distributions have 'views' on file locations</p>
+  <p>Tomcat files not all in one location</p>
+  <p>Often use multiple packages</p>
+  <p>E.g.: <a href="https://packages.ubuntu.com/xenial/tomcat8">Ubuntu 16.04 LTS</a> and Tomcat
+     8.0.x</p>
+  <p>Tend to pick a version and then back-port fixes</p>
+  <aside class="notes">
+    Follow the Ubuntu link (if connectivity allows) and have a look around.
+  </aside>
+</section>
+<section>
+  <h3>Demonstration</h3>
+  <p>Installing from a Linux package</p>
+  <aside class="notes">
+    Look at the default index page. Create a context.
+  </aside>
+</section>
+<section>
+  <h3>Exercise</h3>
+  <p>Install from the Installer for Windows</p>
+  <p>or</p>
+  <p>Install from a Linux package</p>
+</section>
